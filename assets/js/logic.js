@@ -1,40 +1,50 @@
 // variables to keep track of quiz state
     // currentQuestion
+var currentQuestion = 0;
     // time
+var time;
     // timerId
+var timerId;
 
 // variables to reference DOM elements
 var questionsEl = document.getElementById('questions');
+var choicesEl = document.getElementById('choices');
+var startEl = document.querySelector('.start');
+var startButton = document.querySelector(".start-button");
 
 
 /* FUNCTION TO START THE QUIZ */
 function startQuiz() {
     // hide start screen
+    startEl.setAttribute("style", "display: none;")
 
     // un-hide questions section
+    questionsEl.setAttribute("style", "display: block;")
 
     // start timer
 
     // show starting time
 
-    getQuestion();
+    getQuestions();
 }
 
 /* FUNCTION TO GET/SHOW EACH QUESTION */
 function getQuestions() {
     // get current question object from array
+    localStorage.setItem("questionList", JSON.stringify(questions));
+    var questionArr = JSON.parse(localStorage.getItem("questionList"));
 
     // update title with current question
+    document.querySelector("#question-title").textContent = questionArr[currentQuestion].title;
+    console.log(questionArr[currentQuestion].choices.length);
 
-    // clear out ant old question choices
+    // clear out any old question choices
+    choicesEl.innerHTML = "";
 
     // loop over choices
-        // FOR {
-            // create new button for each choice
-
-            // display on the page
-        
-        // }
+    for (var i = 0; i < questionArr[currentQuestion].choices.length; i++) {
+        choicesEl.innerHTML += `<button> ${ questionArr[currentQuestion].choices[i] } </button>`;
+    }
 }
 
 /* FUNCTION FOR CLICKING A QUESTION */
@@ -100,5 +110,5 @@ function saveHighscore() {
     // user clicks button to submit initials
 
     // user clicks button to start quiz
-
+startButton.addEventListener("click", startQuiz);
     // user clicks on element containing choices
