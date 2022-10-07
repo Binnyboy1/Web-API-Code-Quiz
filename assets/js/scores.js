@@ -9,7 +9,7 @@ function printHighscores() {
     }
 
     // sort highscores by score property in descending order
-    if (highscores.score === undefined) {   // When there is only 1 object in the list, highscores.score will register a value, otherwise it will be undefined
+    if (highscores.scores === undefined) {   // When there is only 1 object in the list, highscores.score will register a value, otherwise it will be undefined
         highscores.sort((a, b) => b.scores - a.scores);     // when there is only 1 object in the list, the .sort() operation doesn't work
     }
     // sorted arcade style - if there is a tie, the first to achieve the highscore will be placed higher on the list

@@ -14,7 +14,6 @@ var endScreenEl = document.querySelector('#end-screen');
 var choicesEl = document.querySelector('.choices');
 var startEl = document.querySelector('.start');
 var startButton = document.querySelector(".start-button");
-var initialsEl = document.querySelector('#initials');
 var submitButton = document.querySelector('#submit');
 var finalScore = document.querySelector('#final-score');
 
@@ -89,7 +88,6 @@ function questionClick(event) {
         // if so, end the quiz
     if (questions.length === currentQuestion) {
         quizEnd();
-        console.log("end");
     } 
         // else, get the next question 
     else {
@@ -135,7 +133,7 @@ function clockTick() {
 
 function saveHighscore() {
     // get value of input box - for initials
-    console.log(initialsEl.value);
+    var initialsEl = document.querySelector('#initials');
 
     // make sure value wasn't empty
     if (initialsEl.value !== "") {
