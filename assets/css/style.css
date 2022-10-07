@@ -116,6 +116,26 @@ End Screen start here
 }
 
 /*
+Response starts here
+*/
+#response {
+    font-size: 20px;
+    text-align: left;
+    margin: 0 30vw;
+    margin-top: 20px;
+    border-top: 3px solid var(--light);
+    border-width: max-content;
+    opacity: 0;
+}
+
+#response * {
+    display: flex;
+    flex-flow: row wrap;
+    text-align: left;
+    padding: 4px 0;
+}
+
+/*
 Highscores start here
 */
 h1 {
