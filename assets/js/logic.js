@@ -74,6 +74,7 @@ function questionClick(event) {
 
         // give them feedback, letting them know it's wrong
         console.log("wrong");
+        console.log(event.target.innerText);
     } else {
         // give them feedback, letting them know it's right
         console.log("right");
@@ -157,9 +158,10 @@ function saveHighscore() {
         }
 
         // redirect to next page
-        setTimeout(function() {
-            location.href = "./highscores.html";
-        }, 2000);
+        location.href = "./highscores.html";
+        // setTimeout(function() {
+        //     location.href = "./highscores.html";
+        // }, 2000);
     }
 }
 

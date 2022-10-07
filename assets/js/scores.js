@@ -21,10 +21,10 @@ function printHighscores() {
         cnt++;
         if (item === "names" || item === "scores") {
             if (cnt === 2) {
-                highscoresEl.innerHTML += `<li>${highscores.names}: ${highscores.scores}</li>`;
+                highscoresEl.innerHTML += `<li id="transparent-border">${highscores.names}: ${highscores.scores}</li>`;
             }
         } else {
-            highscoresEl.innerHTML += `<li>${highscores[item].names}: ${highscores[item].scores}</li>`;
+            highscoresEl.innerHTML += `<li id="transparent-border">${highscores[item].names}: ${highscores[item].scores}</li>`;
         }
     }
 

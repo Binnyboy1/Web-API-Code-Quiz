@@ -1,3 +1,162 @@
+/* 
+Global attributes begin here 
+*/
+:root {
+    --primary: #7f47af;
+    --primary50: #7e47ae80;
+    --secondary: #bd2076;
+    --light: #e3dce9;
+    --dark: #21142c;
+    --invis: #ffffff00;
+}
+
+* {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+header {
+    background-image: linear-gradient(to right, var(--primary50), var(--primary));
+    border-bottom: 10px solid var(--primary);
+    color: var(--secondary);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 16px;
+    font-size: 20px;
+}
+
+header * {
+    background-color: var(--invis);
+}
+
+.wrapper {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/*
+Start Screen start here
+*/
+#start-screen * {
+    padding: 10px;
+}
+
+#start-screen > h1 {
+    font-size: 32px;
+}
+
+#start-screen > p {
+    font-size: 20px;
+}
+
+#start-screen > button {
+    margin-top: 25px;
+}
+
+/*
+Questions start here
+*/
+#questions {
+    text-align: left;
+    margin: 0 30vw;
+}
+
+#questions > h2 {
+    font-size: 24px;
+    padding-left: 10px;
+}
+
+#choices {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    margin-top: 25px;
+}
+
+#choices * {
+    width: 100%;
+    text-align: left;
+}
+
+/*
+End Screen start here
+*/
+#end-screen {
+    text-align: left;
+    margin: 0 30vw;
+}
+
+#end-screen > * {
+    margin: 10px 0;
+}
+
+#end-screen > h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+#end-screen > p {
+    font-size: 20px;
+}
+
+#entry {
+    display: flex;
+    align-items: center;
+}
+
+#end-screen button {
+    font-size: 16px;
+    padding: 5px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+/*
+Highscores start here
+*/
+h1 {
+    font-size: 32px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+#highscores {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    background-image: radial-gradient(circle, var(--invis), var(--primary50));
+    text-align: left;
+    margin: 4px 0;
+    padding: 8px 32px;
+    font-size: 20px;
+    width: 50%;
+}
+
+#transparent-border {
+    border: 3px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, var(--primary), var(--primary50));
+}
+
+/* break */
+
+button {
+    font-size: 24px;
+    border: 5px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, var(--primary), var(--secondary));
+    padding: 10px;
+    margin: 5px;
+}
+
 .hide {
     display: none;
 }
