@@ -2,9 +2,11 @@
     // currentQuestion
 var currentQuestion = 0;
     // time
-var time = 0;
+var time = 75;
     // timerId
-var timerId;
+var timerId = document.querySelector('#timerId');
+
+var finalTime;
 
 // variables to reference DOM elements
 var questionsEl = document.querySelector('#questions');
@@ -14,6 +16,7 @@ var startEl = document.querySelector('.start');
 var startButton = document.querySelector(".start-button");
 var initialsEl = document.querySelector('#initials');
 var submitButton = document.querySelector('#submit');
+var finalScore = document.querySelector('#final-score');
 
 
 /* FUNCTION TO START THE QUIZ */
@@ -25,8 +28,10 @@ function startQuiz() {
     questionsEl.setAttribute("style", "display: block;");
 
     // start timer
+    clockTick();
 
     // show starting time
+    timerId.textContent = "Time: " + time;
 
     getQuestions();
 }
@@ -34,18 +39,17 @@ function startQuiz() {
 /* FUNCTION TO GET/SHOW EACH QUESTION */
 function getQuestions() {
     // get current question object from array
-    localStorage.setItem("questionList", JSON.stringify(questions));
-    var questionArr = JSON.parse(localStorage.getItem("questionList"));
+    var currentQ = questions[currentQuestion];
 
     // update title with current question
-    document.querySelector("#question-title").textContent = questionArr[currentQuestion].title;
+    document.querySelector("#question-title").textContent = currentQ.title;
 
     // clear out any old question choices
     choicesEl.innerHTML = "";
 
     // loop over choices
-    for (var i = 0; i < questionArr[currentQuestion].choices.length; i++) {
-        choicesEl.innerHTML += `<button> ${ questionArr[currentQuestion].choices[i] } </button>`;
+    for (var i = 0; i < currentQ.choices.length; i++) {
+        choicesEl.innerHTML += `<button> ${ currentQ.choices[i] } </button>`;
     }
 
     return;
@@ -54,9 +58,7 @@ function getQuestions() {
 /* FUNCTION FOR CLICKING A QUESTION */
 function questionClick(event) {
     // retrieving answer
-    localStorage.setItem("questionList", JSON.stringify(questions));
-    var questionArr = JSON.parse(localStorage.getItem("questionList"));
-    var questionAnswer = questionArr[currentQuestion].answer;
+    var questionAnswer = questions[currentQuestion].answer;
 
     // if the clicked element is not a choice button, do nothing.
     if (event.target.nodeName !== "BUTTON") {
@@ -66,10 +68,13 @@ function questionClick(event) {
     // check if user guessed wrong
     if (event.target.innerText !== questionAnswer) {
         // penalize time
-        console.log("wrong");
+        time -= 10;
+
         // display new time on page
+        timerId.textContent = "Time: " + time;
 
         // give them feedback, letting them know it's wrong
+        console.log("wrong");
     } else {
         // give them feedback, letting them know it's right
         console.log("right");
@@ -82,7 +87,7 @@ function questionClick(event) {
 
     // check if we've run out of questions
         // if so, end the quiz
-    if (questionArr.length === currentQuestion) {
+    if (questions.length === currentQuestion) {
         quizEnd();
         console.log("end");
     } 
@@ -97,11 +102,15 @@ function questionClick(event) {
 /* FUNCTION TO END THE QUIZ */
 function quizEnd() {
     // stop timer
+    finalTime = time;
+    time = 0;
+    timerId.textContent = "Time: " + finalTime;
 
     // show end screen
     endScreenEl.setAttribute("style", "display: block;");
 
     // show final score
+    finalScore.textContent = finalTime;
 
     // hide questions section
     questionsEl.setAttribute("style", "display: none;");
@@ -110,8 +119,18 @@ function quizEnd() {
 /* FUNCTION FOR UPDATING THE TIME */
 function clockTick() {
     // update time
+    var timer = setInterval(function () {
+        if(time !== 0) {
+            time--;
+            timerId.textContent = "Time: " + time;
+        }
+    }, 1000);
 
     // check if user ran out of time
+    if(time === 0) {
+        clearInterval(timer);
+        quizEnd();
+    }
 }
 
 function saveHighscore() {
@@ -121,29 +140,28 @@ function saveHighscore() {
     // make sure value wasn't empty
     if (initialsEl.value !== "") {
         // get saved scores from localstorage, or if not any, set to empty array
-        var names = [];
-        var scores = [];
-        var prevNames = localStorage.getItem("names");
-        var prevScores = localStorage.getItem("scores");
-
-        if (prevNames !== null) {
-            names.push(localStorage.getItem("names"));
-        }
-        if (prevScores !== null) {
-            scores.push(localStorage.getItem("scores"));
-        }
+        var prevList = JSON.parse(localStorage.getItem("highscores"));
 
         // format new score object for current user
-        names.push(initialsEl.value);
-        scores.push(time);
+        var highscores = {
+            names: initialsEl.value,
+            scores: finalTime
+        }
 
         // save to local storage
-        localStorage.setItem("names", names);
-        localStorage.setItem("scores", scores);
+        if (prevList === null) {
+            localStorage.setItem("highscores", JSON.stringify(highscores));
+        } else if (prevList.length > 1) {
+            localStorage.setItem("highscores", JSON.stringify([...prevList, highscores]));
+            // Learned from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+        } else {
+            localStorage.setItem("highscores", JSON.stringify([prevList, highscores]));
+        }
 
         // redirect to next page
-        console.log(names);
-        console.log(scores);
+        setTimeout(function() {
+            location.href = "./highscores.html";
+        }, 2000);
     }
 }
 
